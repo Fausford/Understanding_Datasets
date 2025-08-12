@@ -1,0 +1,72 @@
+---
+title: "Understanding Datasets"
+author: "Fausford_AI Series"
+date: "2025-08-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+path = "/cloud/project/Fausford_Datasets/medical_synthetic.csv"
+
+med_data <- read_csv(path)
+```
+```{r}
+glimpse(med_data)
+```
+```{r}
+colnames(med_data)
+```
+
+## Missing Data 
+
+```{r}
+summary(med_data)
+```
+
+```{r}
+colSums(is.na(med_data))
+```
+
+
+```{r}
+missing <- med_data |>
+  summarise_all(~sum(is.na(.)))
+
+missing
+```
+
+#**Descriptive analysis**
+
+## Basics
+ 
+```{r}
+#install.packages("skimr")
+#install.packages("psych")
+
+library(skimr)
+library(psych)
+```
+
+```{r}
+skim(med_data)
+```
+
+```{r}
+describe(med_data)
+```
+## Dropping missing Data
+
+```{r}
+# Methods for handling missing data available in a different repository
+med_data <- med_data |>
+  drop_na()
+```
+
+```{r}
+colSums(is.na(med_data))
+```
